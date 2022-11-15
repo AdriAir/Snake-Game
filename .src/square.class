@@ -1,0 +1,85 @@
+' Gambas class file
+
+'PROPIEDADES
+
+Private squareColor As Integer
+Private side As Short
+Private posX As Short
+Private posY As Short
+
+'####################################################
+
+'COMPORTAMIENTOS
+
+'### DIBUJAR ###
+
+Public Sub _new(newColor As Integer, newSide As Short, newX As Short, newY As Short)
+
+      squareColor = newColor
+      side = newSide
+      posX = newX
+      posY = newY
+
+End
+
+'### MOVERSE ###
+
+Public Sub move(keys As String)
+  
+  If keys = "w" Then 
+    
+    posY = posY - side
+    
+  Else If keys = "s" Then 
+
+    posY = posY + side
+
+  Else If keys = "a" Then 
+
+    posX = posX - side
+
+  Else If keys = "d" Then 
+
+    posX = side + posX  
+    
+  Endif
+  
+End
+
+'### DIBUJARSE ###
+
+Public Sub draw(container As DrawingArea)
+      
+    Paint.Begin(container)
+    Paint.Brush = Paint.Color(squareColor)
+    Paint.Rectangle(posX, posY, side, side, 5) 
+    Paint.Fill 
+    Paint.End
+  
+End
+
+'### OBTENER DATOS ###
+
+Public Function getColor() As Integer
+  
+   Return squareColor
+  
+End
+
+Public Function getPosX() As Short
+  
+   Return posX
+  
+End
+
+Public Function getPosY() As Short
+  
+   Return posY
+  
+End
+
+Public Function getSide() As Short
+  
+  Return side
+  
+End

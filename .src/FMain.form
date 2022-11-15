@@ -1,0 +1,84 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,127.8571,88.5714)
+  Background = Color.LightGray
+  Foreground = Color.Green
+  Text = ("Snake Game")
+  Resizable = False
+  { continue Button
+    MoveScaled(4,79,14,7)
+    Font = Font["+3"]
+    Background = Color.DarkGreen
+    Foreground = Color.White
+    Text = ("Continuar")
+  }
+  { lblPoints Label
+    MoveScaled(75,79,31,7)
+    Font = Font["+8"]
+    Background = Color.LightForeground
+    Foreground = Color.White
+    Alignment = Align.Right
+    Border = Border.Sunken
+    Text = ("0")
+  }
+  { game DrawingArea
+    MoveScaled(1,1,125.7143,74.2857)
+    Background = Color.DarkGray
+    Focus = True
+  }
+  { pause Button
+    MoveScaled(20,79,14,7)
+    Font = Font["+3"]
+    Background = Color.DarkYellow
+    Foreground = Color.White
+    Text = ("Pausar")
+  }
+  { Label1 Label
+    MoveScaled(76,79,9,3)
+    Font = Font["+2"]
+    Foreground = Color.White
+    Text = ("Puntos")
+  }
+  { lblTime Label
+    MoveScaled(38,79,31,7)
+    Font = Font["+8"]
+    Background = Color.LightForeground
+    Foreground = Color.White
+    Alignment = Align.Right
+    Border = Border.Sunken
+    Text = ("0")
+  }
+  { exit Button
+    MoveScaled(111,79,14,7)
+    Font = Font["+3"]
+    Background = Color.DarkRed
+    Foreground = Color.White
+    Text = ("Salir")
+  }
+  { Label2 Label
+    MoveScaled(38.5714,79,12,3)
+    Font = Font["+2"]
+    Foreground = Color.White
+    Text = ("Tiempo")
+  }
+  { myTimer #Timer
+    #MoveScaled(56,79)
+    Delay = 100
+  }
+  { play Button
+    MoveScaled(4,79,30,7)
+    Font = Font["+3"]
+    Background = Color.DarkGreen
+    Foreground = Color.White
+    Text = ("Jugar")
+  }
+  { msgBox Label
+    MoveScaled(30.4286,19,67,33)
+    Font = Font["+6"]
+    Background = Color.LightForeground
+    Foreground = Color.White
+    Alignment = Align.Center
+    Border = Border.Sunken
+  }
+}

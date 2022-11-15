@@ -1,0 +1,162 @@
+' Gambas class file
+
+'####################################################
+
+'ESTADO - ATRIBUTOS
+
+'####################################################
+
+
+' es un conjunto de cuadrados ordenado, en forma de lista, donde
+' el primero de la lista queremos que sea la cabeza
+Private myBody As Square[]
+
+'tengo que saber en cada momento si me muevo a la I, D, ARR, AB
+Private direcction As String
+
+
+'####################################################
+
+'COMPORTAMIENTO - MÉTODOS
+
+'####################################################
+
+'Constructor
+'primero ponemos public, después sub, _new para los constructores
+'después entre paréntesis tantos tripletes de parámetros como atributos (norma general)
+
+Public Sub _new(newX As Short, newY As Short, snakeColor As Integer, newDirecction As String)
+
+
+     Dim head As Square
+     
+     head = New Square(snakeColor, 20, newX, newY)
+     '¿cuál será el "ancho" de mi serpiente?
+     
+     ' Nos han definido la serpiente como de 20px
+     
+     
+     'Preparo la lista de cuadrados
+     myBody = New Square[]
+     
+     'añadir la cabeza al cuerpo
+     myBody.Add(head)
+     
+     direcction = newDirecction
+      
+      
+End
+
+'Moverse
+Public Sub move()
+  'crezco
+  Me.growUp()
+  
+  'quito el último
+  myBody.Pop()
+  
+End
+
+
+
+'pintarse
+Public Sub draw(container As DrawingArea)
+
+  Dim i As Integer
+  'tengo que conseguir que cada uno de los cuadrados, uno a uno, se pinte
+  For i = 0 To myBody.Count - 1
+      myBody[i].draw(container)
+  Next
+    
+End
+
+'Crecimiento de la serpiente
+Public Sub growUp() 
+  'Coger un nuevo cuadrado. 
+  Dim newHead As Square
+  Dim oldHead As Square
+  
+  
+  oldHead = myBody.First
+  'crearlo y ponerlo donde est á la cabeza.   
+  newHead = New Square(oldHead.getColor(), 20, oldHead.getPosX(), oldHead.getPosY())
+   
+  'Añadirlo al cuerpo
+  myBody.Add(newHead, 0)
+  
+  'Moverlo un paso adelante.
+  newHead.move(direcction)
+  
+  
+  
+End
+
+'Preguntamos a la serpiente si sigue viva... es lo mejor que ella sabrá
+Public Function isOutOfClient(Container As DrawingArea) As Boolean
+   
+   Dim isDead As Boolean = False
+    
+    If myBody.First.getPosX() < 0 Or myBody.First.getPosY() < 0 Or myBody.First.getPosX() > (Container.ClientWidth - myBody.First.getSide()) Or myBody.First.getPosY() > (Container.ClientHeight - myBody.First.getSide()) Then 
+    
+      isDead = True 
+        
+    Else 
+    
+      isDead = False
+    
+    Endif
+    
+    Return isDead
+  
+End
+
+Public Function isInHimself() As Boolean
+   
+   Dim isDead As Boolean = False
+   
+  If myBody.Count >= 5 Then 
+    
+    For i As Integer = 4 To myBody.Count - 1
+      
+      If myBody.First.getPosX() = myBody[i].getPosX() And myBody.First.getPosY() = myBody[i].getPosY() Then 
+        
+        isDead = True
+        Break 
+        
+      Else 
+        
+        isDead = False
+        
+      Endif
+      
+    Next
+     
+  Endif
+  
+  Return isDead
+  
+End
+
+
+Public Sub changeDirecction(keys As String, lastKey As String)
+  
+  
+  'si keys es W,A,S,D y ninguna más, entonces...
+  If keys = "w" And lastKey <> "s" Then 
+    direcction = keys
+  Else If keys = "a" And lastKey <> "d" Then 
+    direcction = keys
+  Else If keys = "s" And lastKey <> "w" Then
+    direcction = keys
+  Else If keys = "d" And lastKey <> "a" Then  
+    direcction = keys
+  Else 
+    direcction = direcction
+  Endif
+End
+
+Public Function getLastDirecction() As String
+  
+  Return direcction
+  
+End

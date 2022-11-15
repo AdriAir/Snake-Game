@@ -1,0 +1,111 @@
+' Gambas class file
+
+Private mySnake As Snake
+Private steps As Integer
+
+
+Public Sub play_Click()
+
+  msgBox.Hide()
+  play.Hide()
+  continue.Show()
+  pause.Show()
+  mySnake = New Snake(200, 300, Color.Yellow, "d")
+  steps = 1
+  myTimer.Start()
+
+End
+
+Public Sub myTimer_Timer()
+  
+  If mySnake.isInHimself() = True Or mySnake.isOutOfClient(game) = True Then
+    
+    continue.Hide()
+    pause.Hide()
+    play.Show()
+    msgBox.Text = "Has perdido, \nTu puntuación ha sido de " & lblPoints.Text & "."
+    msgBox.Show()
+    myTimer.Stop()
+  
+  Else 
+    
+    steps = steps + 1 
+    
+    If steps = 10 Then
+      
+       mySnake.growUp
+       steps = 1
+       
+    Else
+      
+       mySnake.move()
+       
+    Endif
+       
+   Endif
+
+  game.Refresh()
+
+End
+
+Public Sub game_Draw()
+
+  If (mySnake <> Null) Then 
+    
+     mySnake.draw(game)
+     
+  Endif
+
+End
+
+Public Sub exit_Click()
+
+  FMain.Close()
+
+End
+
+Public Sub pause_Click()
+
+ myTimer.Stop()
+
+End
+
+Public Sub continue_Click()
+
+ myTimer.Start()
+
+End
+
+Public Sub Form_Open()
+
+  msgBox.Hide()
+  continue.Hide()
+  pause.Hide()
+
+End
+
+Public Sub Form_KeyPress()
+
+  If Key.Text = "w" Or Key.Text = "a" Or Key.Text = "s" Or Key.Text = "d" Then
+    
+    mySnake.changeDirecction(Key.Text, mySnake.getLastDirecction())
+  
+  Else If Key.Text = "W" Then
+  
+  mySnake.changeDirecction("w", mySnake.getLastDirecction())
+  
+  Else If Key.Text = "A" Then
+  
+  mySnake.changeDirecction("a", mySnake.getLastDirecction())
+  
+  Else If Key.Text = "S" Then
+    
+    mySnake.changeDirecction("s", mySnake.getLastDirecction())
+    
+  Else If Key.Text = "D" Then
+    
+    mySnake.changeDirecction("d", mySnake.getLastDirecction())
+    
+  Endif
+
+End
