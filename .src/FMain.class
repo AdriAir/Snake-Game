@@ -6,6 +6,10 @@ Private steps As Integer
 
 Public Sub play_Click()
 
+  Music.Load("./assets/gameOver.ogg")
+  If Music.Stat = 1 Then 
+    Music.Stop()
+  Endif
   msgBox.Hide()
   play.Hide()
   continue.Show()
@@ -20,6 +24,8 @@ Public Sub myTimer_Timer()
   
   If mySnake.isInHimself() = True Or mySnake.isOutOfClient(game) = True Then
     
+    Music.Load("./assets/gameOver.ogg")
+    Music.Play()
     continue.Hide()
     pause.Hide()
     play.Show()
