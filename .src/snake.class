@@ -85,8 +85,7 @@ Public Sub growUp()
   myBody.Add(newHead, 0)
   
   'Moverlo un paso adelante.
-  newHead.move(direcction)
-  
+  newHead.move(direcction) 
   
   
 End

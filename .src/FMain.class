@@ -31,10 +31,13 @@ Public Sub myTimer_Timer()
     
     steps = steps + 1 
     
-    If steps = 10 Then
+    If steps = 20 Then
       
        mySnake.growUp
        steps = 1
+       Music.Load("./assets/growUp.ogg")
+       Music.Volume = 20
+       Music.Play
        
     Else
       
