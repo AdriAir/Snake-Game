@@ -11,21 +11,24 @@ Public Sub play_Click()
   continue.Show()
   pause.Show()
   mySnake = New Snake(200, 300, Color.Yellow, "d")
-  steps = 1
+  steps = 1 l
   myTimer.Start()
-
+  
+  Music.Load("./assets/Alexey_Anisimov_-_8-bit_Fun.ogg")
+  Music.Play(0.9)
 End
 
 Public Sub myTimer_Timer()
   
   If mySnake.isInHimself() = True Or mySnake.isOutOfClient(game) = True Then
-    
+    Music.Stop
     continue.Hide()
     pause.Hide()
     play.Show()
     msgBox.Text = "Has perdido, \nTu puntuación ha sido de " & lblPoints.Text & "."
     msgBox.Show()
     myTimer.Stop()
+
   
   Else 
     
@@ -65,14 +68,15 @@ Public Sub exit_Click()
 End
 
 Public Sub pause_Click()
-
+ Music.pause
  myTimer.Stop()
 
 End
 
 Public Sub continue_Click()
-
+ Music.Play
  myTimer.Start()
+
 
 End
 
