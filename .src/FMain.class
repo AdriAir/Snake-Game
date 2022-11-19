@@ -2,33 +2,34 @@
 
 Private mySnake As Snake
 Private steps As Integer
+Private backgroundMusic As Sound
+Private myChannel1 As Channel 
+Public gameOverMusic As Sound 
+Private myChannel2 As Channel
+Private growUpMusic As Sound 
+Private myChannel3 As Channel
 
 
 Public Sub play_Click()
 
-  Music.Load("./assets/gameOver.ogg")
-  If Music.Stat = 1 Then 
-    Music.Stop()
-  Endif
   msgBox.Hide()
   play.Hide()
   continue.Show()
   pause.Show()
   mySnake = New Snake(200, 300, Color.Yellow, "d")
-  steps = 1 l
+  steps = 1
   myTimer.Start()
   
-  Music.Load("./assets/Alexey_Anisimov_-_8-bit_Fun.ogg")
-  Music.Play(0.9)
+  myChannel1.Play(backgroundMusic)
+  
 End
 
 Public Sub myTimer_Timer()
   
   If mySnake.isInHimself() = True Or mySnake.isOutOfClient(game) = True Then
    
-    Music.Load("./assets/gameOver.ogg")
-    Music.Play()
-    Music.Stop
+    myChannel1.Stop()
+    myChannel2.Play(gameOverMusic)
     continue.Hide()
     pause.Hide()
     play.Show()
@@ -43,11 +44,11 @@ Public Sub myTimer_Timer()
     
     If steps = 20 Then
       
-       mySnake.growUp
+       mySnake.growUp()
        steps = 1
-       Music.Load("./assets/growUp.ogg")
-       Music.Volume = 20
-       Music.Play
+       
+       myChannel3.Play(growUpMusic)
+       myChannel3.Volume = 50
        
     Else
       
@@ -78,13 +79,15 @@ Public Sub exit_Click()
 End
 
 Public Sub pause_Click()
- Music.pause
- myTimer.Stop()
+  
+  myChannel1.Pause()
+  myTimer.Stop()
 
 End
 
 Public Sub continue_Click()
- Music.Play
+
+ myChannel1.Play(backgroundMusic)
  myTimer.Start()
 
 
@@ -92,6 +95,13 @@ End
 
 Public Sub Form_Open()
 
+  Channels.Count = 3
+  myChannel1 = Channels[0]
+  myChannel2 = Channels[1]
+  myChannel3 = Channels[2]
+  backgroundMusic = New Sound("./assets/background.ogg")
+  gameOverMusic = New Sound("./assets/gameOver.ogg")
+  growUpMusic = New Sound("./assets/growUp.ogg")
   msgBox.Hide()
   continue.Hide()
   pause.Hide()
