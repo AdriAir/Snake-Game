@@ -6,11 +6,12 @@ Private myChannel1 As Channel
 Private myChannel2 As Channel
 Private myChannel3 As Channel
 Private backgroundMusic As Sound
-Public gameOverMusic As Sound 
-Private growUpMusic As Sound 
+Private growUpMusic As Sound
+Private gameOverMusic As Sound
 
 Public Sub play_Click()
 
+  myChannel2.Stop()
   msgBox.Hide()
   play.Hide()
   continue.Show()
@@ -18,7 +19,6 @@ Public Sub play_Click()
   mySnake = New Snake(200, 300, Color.Yellow, "d")
   steps = 1
   myTimer.Start()
-  
   myChannel1.Play(backgroundMusic)
   
 End
@@ -39,22 +39,23 @@ Public Sub myTimer_Timer()
   
   Else 
     
-    steps = steps + 1 
-    
+    If steps = 10 Or steps = 20 Then 
+      lblTime.Text = Val(lblTime.Text) + 1
+    Endif
     If steps = 20 Then
       
        mySnake.growUp()
+       lblPoints.Text = Val(lblPoints.Text) + 10
        steps = 1
        
        myChannel3.Play(growUpMusic)
-       myChannel3.Volume = 50
        
     Else
       
        mySnake.move()
        
     Endif
-       
+    steps = steps + 1 
    Endif
 
   game.Refresh()
@@ -74,6 +75,9 @@ End
 Public Sub exit_Click()
 
   FMain.Close()
+  myChannel1.Stop()
+  myChannel2.Stop()
+  myChannel3.Stop()
 
 End
 
@@ -86,7 +90,7 @@ End
 
 Public Sub continue_Click()
 
- myChannel1.Play(backgroundMusic)
+ myChannel1.Play()
  myTimer.Start()
 
 
@@ -98,9 +102,11 @@ Public Sub Form_Open()
   myChannel1 = Channels[0]
   myChannel2 = Channels[1]
   myChannel3 = Channels[2]
-  backgroundMusic.Load("./assets/background.wav")
-  gameOverMusic.Load("./assets/gameOver.wav")
-  growUpMusic.Load("./assets/growUp.wav")
+  backgroundMusic = Sound.Load("./assets/background.wav")
+  growUpMusic = Sound.Load("./assets/growUp.wav")
+  gameOverMusic = Sound.Load("./assets/gameOver.wav")
+  Channels.Volume = 20
+  growUpMusic.Volume = 20
   msgBox.Hide()
   continue.Hide()
   pause.Hide()
