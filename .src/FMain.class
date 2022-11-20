@@ -11,6 +11,8 @@ Private gameOverMusic As Sound
 
 Public Sub play_Click()
 
+  lblPoints.Text = "0"
+  lblTime.Text = "0"
   myChannel2.Stop()
   msgBox.Hide()
   play.Hide()
