@@ -2,13 +2,12 @@
 
 Private mySnake As Snake
 Private steps As Integer
-Private backgroundMusic As Sound
-Private myChannel1 As Channel 
-Public gameOverMusic As Sound 
+Private myChannel1 As Channel
 Private myChannel2 As Channel
-Private growUpMusic As Sound 
 Private myChannel3 As Channel
-
+Private backgroundMusic As Sound
+Public gameOverMusic As Sound 
+Private growUpMusic As Sound 
 
 Public Sub play_Click()
 
@@ -99,9 +98,9 @@ Public Sub Form_Open()
   myChannel1 = Channels[0]
   myChannel2 = Channels[1]
   myChannel3 = Channels[2]
-  backgroundMusic = New Sound("./assets/background.ogg")
-  gameOverMusic = New Sound("./assets/gameOver.ogg")
-  growUpMusic = New Sound("./assets/growUp.ogg")
+  backgroundMusic.Load("./assets/background.wav")
+  gameOverMusic.Load("./assets/gameOver.wav")
+  growUpMusic.Load("./assets/growUp.wav")
   msgBox.Hide()
   continue.Hide()
   pause.Hide()
