@@ -64,7 +64,7 @@
   }
   { myTimer #Timer
     #MoveScaled(56,79)
-    Delay = 100
+    Delay = 300
   }
   { play Button
     MoveScaled(4,79,30,7)

@@ -5,9 +5,31 @@ Private steps As Integer
 Private myChannel1 As Channel
 Private myChannel2 As Channel
 Private myChannel3 As Channel
+Private myChannel4 As Channel
 Private backgroundMusic As Sound
-Private growUpMusic As Sound
+Private growingUpMusic As Sound
 Private gameOverMusic As Sound
+Private movingMusic As Sound
+
+Public Sub Form_Open()
+
+  Channels.Count = 4
+  myChannel1 = Channels[0]
+  myChannel2 = Channels[1]
+  myChannel3 = Channels[2]
+  myChannel4 = Channels[3]
+  backgroundMusic = Sound.Load("./assets/background.wav")
+  growingUpMusic = Sound.Load("./assets/growUp.wav")
+  gameOverMusic = Sound.Load("./assets/gameOver.wav")
+  movingMusic = Sound.Load("./assets/move.wav")
+  Channels.Volume = 100
+  growingUpMusic.Volume = 120
+  movingMusic.Volume = 120
+  msgBox.Hide()
+  continue.Hide()
+  pause.Hide()
+
+End
 
 Public Sub play_Click()
 
@@ -20,8 +42,8 @@ Public Sub play_Click()
   pause.Show()
   mySnake = New Snake(200, 300, Color.Yellow, "d")
   steps = 1
-  myTimer.Start()
   myChannel1.Play(backgroundMusic)
+  myTimer.Start()
   
 End
 
@@ -30,6 +52,8 @@ Public Sub myTimer_Timer()
   If mySnake.isInHimself() = True Or mySnake.isOutOfClient(game) = True Then
    
     myChannel1.Stop()
+    myChannel2.Stop()
+    myChannel4.Stop()
     myChannel2.Play(gameOverMusic)
     continue.Hide()
     pause.Hide()
@@ -50,12 +74,14 @@ Public Sub myTimer_Timer()
        lblPoints.Text = Val(lblPoints.Text) + 10
        steps = 1
        
-       myChannel3.Play(growUpMusic)
+       myChannel4.Stop()
+       myChannel3.Play(growingUpMusic)
        
     Else
       
        mySnake.move()
-       
+       myChannel3.Stop()
+       myChannel4.Play(movingMusic)
     Endif
     steps = steps + 1 
    Endif
@@ -80,12 +106,15 @@ Public Sub exit_Click()
   myChannel1.Stop()
   myChannel2.Stop()
   myChannel3.Stop()
+  myChannel4.Stop()
 
 End
 
 Public Sub pause_Click()
   
   myChannel1.Pause()
+  myChannel3.Pause()
+  myChannel4.Pause()
   myTimer.Stop()
 
 End
@@ -93,25 +122,10 @@ End
 Public Sub continue_Click()
 
  myChannel1.Play()
+ myChannel3.Play()
+ myChannel4.Play()
  myTimer.Start()
 
-
-End
-
-Public Sub Form_Open()
-
-  Channels.Count = 3
-  myChannel1 = Channels[0]
-  myChannel2 = Channels[1]
-  myChannel3 = Channels[2]
-  backgroundMusic = Sound.Load("./assets/background.wav")
-  growUpMusic = Sound.Load("./assets/growUp.wav")
-  gameOverMusic = Sound.Load("./assets/gameOver.wav")
-  Channels.Volume = 20
-  growUpMusic.Volume = 20
-  msgBox.Hide()
-  continue.Hide()
-  pause.Hide()
 
 End
 
